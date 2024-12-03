@@ -1,7 +1,7 @@
 import { FilmRoll } from '@/components/FilmRoll'
+import { gillSans } from '@/lib/fonts'
 import { promises as fs } from 'fs'
 import path from 'path'
-import { gillSans } from './layout'
 
 export default async function Home() {
   const rollsDirectory = path.join(process.cwd(), '/public/assets/rolls')
