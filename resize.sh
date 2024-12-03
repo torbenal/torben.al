@@ -62,7 +62,7 @@ for f in "${IMAGES[@]}"; do
         compressed_dir="$dir/compressed"
         mkdir -p "$compressed_dir"
 
-         # Check if the image has already been compressed
+        # Check if the image has already been compressed
         if [ -f "$compressed_dir/${name}_micro.jpg" ] && [ -f "$compressed_dir/${name}_small.jpg" ] && [ -f "$compressed_dir/${name}_medium.jpg" ] && [ -f "$compressed_dir/${name}_large.jpg" ]; then
             echo "[ ✓ ] $f already compressed. Skipping."
             continue
@@ -81,6 +81,7 @@ for f in "${IMAGES[@]}"; do
             jpegoptim "$jpg_file" --size="$QUALITY"% -s &> /dev/null
             webp_file="$compressed_dir/${name}_${size}.webp"
             cwebp -q "$QUALITY" "$jpg_file" -o "$webp_file" -quiet &> /dev/null
+            rm "$jpg_file"  # Delete the JPEG file after converting to WebP
         done
     fi
 done
