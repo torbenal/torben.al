@@ -28,23 +28,28 @@ export const FilmRoll = (p: Props) => {
           <h2 className="text-sm text-center text-black">{rollName}</h2>
         </div>
       </div>
-      <div className="flex w-full overflow-x-auto overflow-y-hidden -translate-x-24 peer-hover:-translate-x-10 transition-all z-[1]">
+      <div
+        className={clsx(
+          'flex w-full overflow-x-clip overflow-y-hidden -translate-x-10 transition-all duration-500 hover:cursor-pointer',
+          !isOpen && `peer-hover:-translate-x-6 hover:-translate-x-6`,
+          isOpen && `peer-hover:-translate-x-14 hover:-translate-x-14`
+        )}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {p.images.map((imagePath, i) => {
           return (
             <div
               key={imagePath}
-              className={clsx(
-                'flex items-center h-full min-w-[130px] max-w-[130px] transition-all duration-500',
-                !isOpen && i < p.images.length - 1 && 'hidden'
-              )}
+              className={clsx('mt-[2%] transition-all duration-1000 min-w-[130px]')}
+              style={{ transform: isOpen ? 'translateX(0)' : `translateX(-${(i + 1) * 127}px)` }}
             >
-              <div className="relative object-cover">
-                <img src="/assets/film-border.png" className="object-contain" />
+              <div className="relative">
+                <img src="/assets/film-border.png" />
                 <img
                   key={imagePath}
-                  src={`/assets/rolls/${p.rollPath}/${imagePath}`}
+                  src={`/assets/rolls/${p.rollPath}/compressed/${imagePath}`}
                   alt={imagePath}
-                  className="object-contain absolute top-[15%] border-x-[4px] border-[#290000]"
+                  className="absolute top-[15%] border-x-[4px] border-[#290000]"
                 />
                 <span className="absolute top-[0.3px] right-[36%] text-[6px] font-bold text-[#AF944F]">
                   {i + 1}

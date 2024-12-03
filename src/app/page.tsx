@@ -13,9 +13,12 @@ export default async function Home() {
       <h1 className={gillSans.className}>My rolls</h1>
       <div className="flex flex-wrap">
         {rolls.map(async (rollPath) => {
-          const imageDirectory = path.join(process.cwd(), `/public/assets/rolls/${rollPath}`)
+          const imageDirectory = path.join(
+            process.cwd(),
+            `/public/assets/rolls/${rollPath}/compressed`
+          )
           const imagePaths = await fs.readdir(imageDirectory)
-          const images = imagePaths.filter((imagePath) => imagePath !== '.DS_Store')
+          const images = imagePaths.filter((imagePath) => imagePath.includes('_medium.webp'))
           return <FilmRoll key={rollPath} rollPath={rollPath} images={images} />
         })}
       </div>
