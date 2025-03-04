@@ -1,7 +1,7 @@
 'use client'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Bloom, EffectComposer, Noise } from '@react-three/postprocessing'
+import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing'
 import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { DoubleSide, Vector3 } from 'three'
@@ -115,7 +115,7 @@ const TerrainMesh = () => {
 
         // Smooth Gaussian-like falloff instead of sharp cutoff
         // e^(-x²) gives a nice bell curve
-        const radius = 0.6
+        const radius = 1.2
         const falloff = Math.exp(-Math.pow(distance / radius, 2) * 8)
 
         // Apply smoothed distortion
@@ -149,8 +149,8 @@ const Scene = () => (
     <PerspectiveCamera position={[0, 4, 4]} makeDefault zoom={3} />
     <OrbitControls enabled={false} />
     <EffectComposer>
-      <Noise opacity={0.15} />
-      <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
+      <Noise opacity={0.12} />
+      <Vignette eskil={false} offset={0.1} darkness={1} />
     </EffectComposer>
   </SceneController>
 )
