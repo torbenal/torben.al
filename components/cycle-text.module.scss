@@ -11,10 +11,15 @@
 
 .rwWords{
 	display: inline;
+	position: relative;
+	z-index: 0;
 }
 
 .rwWords1 span{
+	color: #ec687e;
 	position: absolute;
+	display: inline-block;
+	white-space: nowrap;
 	opacity: 0;
   padding: 0;
 	-webkit-animation: rotateWord 15s linear infinite 0s;
