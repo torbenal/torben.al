@@ -1,53 +1,26 @@
 import CycleText from '@/components/cycle-text'
-import Ing from '@/components/fluid-canvas'
-import Image from 'next/image'
+import { Header } from '@/components/header'
+import { HeroSection } from '@/components/hero-section'
+import { ToolIcon } from '@/components/tool-icon'
 
 export default function Home() {
   return (
     <>
-      <div className="absolute inset-0 z-[0] h-[100vh]">
-        <Ing />
-      </div>
+      <HeroSection />
+
       <div className="font-sans max-w-[1200px] mx-auto py-4 px-4 relative pointer-events-none">
-        <header
-          className="bg-[#13121299] px-8 py-5 md:py-7 backdrop-blur-md rounded-xl justify-between flex sticky top-4 z-[1] items-center"
-          style={{
-            boxShadow: 'inset 0 1.5px 1px 0 hsla(0, 0%, 100%, .2)',
-            // border: '1px solid hsla(0, 0%, 100%, .1)',
-          }}
-        >
-          <span className="font-mono font-bold text-lg">
-            <span className="text-[rgba(255,255,255,.3)]">https://</span>torben.al
-          </span>
-          <nav className="flex gap-6">
-            <a href="#" className="flex pointer-events-auto">
-              <Image src="/linkedin.svg" width={20} height={20} alt="LinkedIn" />
-            </a>
-            <a href="#" className="flex pointer-events-auto">
-              <Image src="/github.svg" width={20} height={20} alt="GitHub" />
-            </a>
-            <a href="#" className="flex pointer-events-auto">
-              <button
-                className="bg-white rounded-md py-1 px-2 flex items-center gap-2 text-[#131212] font-medium text-sm cursor-pointer"
-                style={{
-                  boxShadow: 'inset 0 -1px .4px 0 rgba(0,0,0,.2),inset 0 1px .4px 0 #fff',
-                }}
-              >
-                Download CV
-              </button>
-            </a>
-          </nav>
-        </header>
-        <main className="flex flex-col gap-8 ">
-          <div className="py-40">
+        <Header />
+        <main className="flex flex-col ">
+          <div className="space-y-20 py-90 sm:py-72">
             <h1
-              className="text-2xl md:text-5xl font-medium"
+              className="text-balance leading-tight"
               style={{
-                textShadow: '0 0 10px rgba(0,0,0,.9)',
+                textShadow: '0 5px 15px rgba(0,0,0,.9)',
               }}
             >
-              Hello. My name is Torben, <br /> and I'm a
+              Hello. I'm Torben, <br /> and I'm a <br className="block md:hidden" />
               <CycleText
+                className="ml-0 md:ml-4"
                 textArray={[
                   'full-stack developer.',
                   'ML engineer.',
@@ -57,12 +30,56 @@ export default function Home() {
                 ]}
               />
             </h1>
+            <div>
+              <p className="text-balance md:max-w-1/2">
+                BSc in Data Science from ITU Copenhagen, MSc in Technology Entrepreneurship from
+                DTU.
+              </p>
+            </div>
           </div>
-          <div className="py-40">
-            <h1>Hello.</h1>
-          </div>
-          <div className="py-40">
-            <h1>Hello.</h1>
+
+          <div className="space-y-12">
+            <div className="flex flex-col xl:flex-row flex-wrap space-y-8">
+              <div className="space-y-6 flex-1">
+                <h3 className="text-center sm:text-start">Full-stack development</h3>
+                <div className="flex gap-4 flex-wrap justify-center sm:justify-start">
+                  {[
+                    'figma',
+                    'nextjs',
+                    'nodejs',
+                    'prisma',
+                    'react',
+                    'tailwind',
+                    'threejs',
+                    'typescript',
+                    'vercel',
+                    'vuejs',
+                  ].map((icon) => (
+                    <ToolIcon key={icon} name={icon} />
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-6 flex-1">
+                <h3 className="text-center sm:text-start">Data science & ML</h3>
+                <div className="flex gap-4 flex-wrap justify-center sm:justify-start">
+                  {['fastapi', 'huggingface', 'python', 'pytorch', 'yolo'].map((icon) => (
+                    <ToolIcon key={icon} name={icon} />
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-6 flex-1">
+                <h3 className="text-center sm:text-start">DevOps & cloud</h3>
+                <div className="flex gap-4 flex-wrap justify-center sm:justify-start ">
+                  {['aws', 'azure', 'docker', 'gcp', 'vercel'].map((icon) => (
+                    <ToolIcon key={icon} name={icon} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="">
+              <h2>Projects</h2>
+            </div>
           </div>
         </main>
         <footer></footer>

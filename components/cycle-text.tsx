@@ -3,10 +3,11 @@ import styles from './cycle-text.module.scss'
 
 type Props = {
   textArray: string[]
+  className?: string
 }
 
-const CycleText = ({ textArray }: Props) => (
-  <div className={styles.cycleWrapper}>
+const CycleText = ({ textArray, className }: Props) => (
+  <div className={clsx(styles.cycleWrapper, className)}>
     {/* <div className={styles.rwSentence}> */}
     <div className={clsx(styles.rwWords, styles.rwWords1)}>
       {textArray.map((text, i) => (

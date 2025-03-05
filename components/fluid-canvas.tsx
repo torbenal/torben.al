@@ -1,7 +1,7 @@
 'use client'
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Bounds, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing'
+import { EffectComposer, Noise } from '@react-three/postprocessing'
 import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { DoubleSide, Vector3 } from 'three'
@@ -50,11 +50,11 @@ const SceneController = ({ children }: PropsWithChildren) => {
   return <SceneContext.Provider value={sceneValues.current}>{children}</SceneContext.Provider>
 }
 
-const TerrainMesh = () => {
+const TerrainMesh = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
   const simplex = useMemo(() => new SimplexNoise(), [])
   const meshRef = useRef<THREE.Mesh>(null)
   const geometryRef = useRef<THREE.PlaneGeometry>(null)
-  const size = 128 // Reduced for better performance
+  const size = 64 // Reduced for better performance
 
   // Move the useContext hook to the top level of the component
   const scene = useContext(SceneContext)
@@ -62,7 +62,7 @@ const TerrainMesh = () => {
   // Create gradient texture
   const isoTexture = useMemo(() => {
     const canvas = document.createElement('canvas')
-    canvas.width = 512
+    canvas.width = 16
     canvas.height = 16
 
     const context = canvas.getContext('2d')
@@ -75,9 +75,9 @@ const TerrainMesh = () => {
     gradient.addColorStop(0, '#000') // Black at the bottom
     gradient.addColorStop(0.1, '#121212') // Deep red at the bottom
     // gradient.addColorStop(0.7, '#E94057') // Pink
-    gradient.addColorStop(0.7, '#B5101D') // Pink
+    gradient.addColorStop(0.7, '#c72c41') // Pink
     gradient.addColorStop(0.9, '#121212') // Deep red at the top
-    gradient.addColorStop(1, '#B5101D') // Black at the top
+    gradient.addColorStop(1, '#c72c41') // Black at the top
 
     // Fill with the gradient
     context.fillStyle = gradient
@@ -142,23 +142,49 @@ const TerrainMesh = () => {
   )
 }
 
-const Scene = () => (
-  <SceneController>
-    <TerrainMesh />
-    <ambientLight />
-    <PerspectiveCamera position={[0, 4, 4]} makeDefault zoom={3} />
-    <OrbitControls enabled={false} />
-    <EffectComposer>
-      <Noise opacity={0.12} />
-      <Vignette eskil={false} offset={0.1} darkness={1} />
-    </EffectComposer>
-  </SceneController>
-)
+const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
+  const camRef = useRef<THREE.PerspectiveCamera>(null)
+  const controlsRef = useRef<any>(null)
+  const initialCamPos = useMemo(() => new Vector3(0, 4, 4), [])
+  const camZoom = isControlsEnabled ? 2 : 3
 
-export default function FluidCanvas() {
+  // Reset camera position and rotation when controls are disabled
+  useEffect(() => {
+    if (!isControlsEnabled && camRef.current && controlsRef.current) {
+      // Reset camera to initial position
+      camRef.current.position.copy(initialCamPos)
+      camRef.current.lookAt(0, 0, 0)
+
+      // Reset orbit controls
+      controlsRef.current.reset()
+    }
+  }, [isControlsEnabled, initialCamPos])
+
+  return (
+    <SceneController>
+      <TerrainMesh isControlsEnabled={isControlsEnabled} />
+      <ambientLight />
+      <PerspectiveCamera ref={camRef} position={initialCamPos} makeDefault zoom={camZoom} />
+      <OrbitControls
+        ref={controlsRef}
+        enabled={isControlsEnabled}
+        maxDistance={10}
+        minDistance={1}
+        enablePan={false}
+      />
+      <EffectComposer>
+        <Noise opacity={0.12} />
+      </EffectComposer>
+    </SceneController>
+  )
+}
+
+export default function FluidCanvas({ isControlsEnabled }: { isControlsEnabled: boolean }) {
   return (
     <Canvas>
-      <Scene />
+      <Bounds>
+        <Scene isControlsEnabled={isControlsEnabled} />
+      </Bounds>
     </Canvas>
   )
 }
