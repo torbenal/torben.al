@@ -50,7 +50,7 @@ const SceneController = ({ children }: PropsWithChildren) => {
   return <SceneContext.Provider value={sceneValues.current}>{children}</SceneContext.Provider>
 }
 
-const TerrainMesh = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
+const TerrainMesh = () => {
   const simplex = useMemo(() => new SimplexNoise(), [])
   const meshRef = useRef<THREE.Mesh>(null)
   const geometryRef = useRef<THREE.PlaneGeometry>(null)
@@ -162,7 +162,7 @@ const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
 
   return (
     <SceneController>
-      <TerrainMesh isControlsEnabled={isControlsEnabled} />
+      <TerrainMesh />
       <ambientLight />
       <PerspectiveCamera ref={camRef} position={initialCamPos} makeDefault zoom={camZoom} />
       <OrbitControls

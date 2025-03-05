@@ -18,7 +18,7 @@ export default function Home() {
                 textShadow: '0 5px 15px rgba(0,0,0,.9)',
               }}
             >
-              Hello. I'm Torben, <br /> and I'm a <br className="block md:hidden" />
+              Hello. I&apos;m Torben, <br /> and I&apos;m a <br className="block md:hidden" />
               <CycleText
                 className="ml-0 md:ml-4"
                 textArray={[

@@ -1,22 +1,4 @@
-const toolIcons = [
-  'aws',
-  'azure',
-  'docker',
-  'figma',
-  'gcp',
-  'huggingface',
-  'nextjs',
-  'nodejs',
-  'prisma',
-  'python',
-  'pytorch',
-  'react',
-  'tailwind',
-  'threejs',
-  'typescript',
-  'vercel',
-  'vuejs',
-]
+import Image from 'next/image'
 
 export const ToolIcon = ({ name }: { name: string }) => {
   return (
@@ -30,7 +12,7 @@ export const ToolIcon = ({ name }: { name: string }) => {
         borderRight: '1px solid rgba(0,0,0,.2)',
       }}
     >
-      <img src={`/logos/${name}.svg`} alt={name} />
+      <Image src={`/logos/${name}.svg`} alt={name} />
     </div>
   )
 }
