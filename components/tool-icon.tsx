@@ -12,7 +12,7 @@ export const ToolIcon = ({ name }: { name: string }) => {
         borderRight: '1px solid rgba(0,0,0,.2)',
       }}
     >
-      <Image src={`/logos/${name}.svg`} alt={name} />
+      <Image src={`/logos/${name}.svg`} alt={name} width="56" height={56} />
     </div>
   )
 }

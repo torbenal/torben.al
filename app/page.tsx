@@ -8,10 +8,10 @@ export default function Home() {
     <>
       <HeroSection />
 
-      <div className="font-sans max-w-[1200px] mx-auto py-4 px-4 relative pointer-events-none">
+      <div className="font-sans max-w-[1200px] mx-auto py-4 px-4 relative sm:pointer-events-none">
         <Header />
         <main className="flex flex-col ">
-          <div className="space-y-20 py-90 sm:py-72">
+          <div className="space-y-20 py-80 sm:py-72">
             <h1
               className="text-balance leading-tight"
               style={{

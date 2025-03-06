@@ -6,9 +6,36 @@ import { useState } from 'react'
 import { Squash } from './burger/squash'
 
 const headerLinks = [
-  { href: '#', text: 'LinkedIn', icon: '/linkedin.svg' },
-  { href: '#', text: 'GitHub', icon: '/github.svg' },
-  { href: '#', text: 'Download CV', icon: '/download.svg' },
+  {
+    href: 'https://www.linkedin.com/in/torben-albert-lindqvist/',
+    text: 'LinkedIn',
+    icon: '/linkedin.svg',
+    jsx: <Image src="/linkedin.svg" width={16} height={16} alt="LinkedIn" />,
+  },
+  {
+    href: 'https://github.com/torbenal',
+    text: 'GitHub',
+    icon: '/github.svg',
+    jsx: <Image src="/github.svg" width={16} height={16} alt="GitHub" />,
+  },
+  {
+    href: 'CV.pdf',
+    text: 'Download CV',
+    icon: '/download.svg',
+    jsx: (
+      <button
+        className="bg-white rounded-md py-1 px-2 flex items-center gap-2 text-[#131212] font-medium text-sm cursor-pointer"
+        style={{
+          boxShadow: 'inset 0 -2px .4px 0 rgba(0,0,0,.2),inset 0 1px .4px 0 #fff',
+          borderLeft: '1px solid rgba(0,0,0,.2)',
+          borderBottom: '1px solid rgba(0,0,0,.2)',
+          borderRight: '1px solid rgba(0,0,0,.2)',
+        }}
+      >
+        Download CV
+      </button>
+    ),
+  },
 ]
 
 export const Header = () => {
@@ -64,6 +91,7 @@ export const Header = () => {
                     damping: 20,
                     delay: 0.8 * index,
                   }}
+                  target="_blank"
                 >
                   <Image src={link.icon} width={16} height={16} alt={link.text} />
                   <span>{link.text}</span>
@@ -74,25 +102,16 @@ export const Header = () => {
         </AnimatePresence>
 
         <nav className="md:flex gap-6 flex-col md:flex-row hidden">
-          <a href="#" className="flex pointer-events-auto">
-            <Image src="/linkedin.svg" width={20} height={20} alt="LinkedIn" />
-          </a>
-          <a href="#" className="flex pointer-events-auto">
-            <Image src="/github.svg" width={20} height={20} alt="GitHub" />
-          </a>
-          <a href="#" className="flex pointer-events-auto">
-            <button
-              className="bg-white rounded-md py-1 px-2 flex items-center gap-2 text-[#131212] font-medium text-sm cursor-pointer"
-              style={{
-                boxShadow: 'inset 0 -2px .4px 0 rgba(0,0,0,.2),inset 0 1px .4px 0 #fff',
-                borderLeft: '1px solid rgba(0,0,0,.2)',
-                borderBottom: '1px solid rgba(0,0,0,.2)',
-                borderRight: '1px solid rgba(0,0,0,.2)',
-              }}
+          {headerLinks.map((link, index) => (
+            <a
+              href={link.href}
+              key={index}
+              className="flex pointer-events-auto gap-3 items-center text-[rgba(255,255,255,.7)]"
+              target="_blank"
             >
-              Download CV
-            </button>
-          </a>
+              {link.jsx}
+            </a>
+          ))}
         </nav>
       </header>
     </div>
