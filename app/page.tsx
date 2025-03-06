@@ -11,7 +11,7 @@ export default function Home() {
       <div className="font-sans max-w-[1200px] mx-auto py-4 px-4 relative sm:pointer-events-none">
         <Header />
         <main className="flex flex-col ">
-          <div className="space-y-20 py-80 sm:py-72">
+          <div className="space-y-20 h-[90ch] flex flex-col justify-center">
             <h1
               className="text-balance leading-tight"
               style={{
@@ -30,12 +30,11 @@ export default function Home() {
                 ]}
               />
             </h1>
-            <div>
-              <p className="text-balance md:max-w-1/2">
-                BSc in Data Science from ITU Copenhagen, MSc in Technology Entrepreneurship from
-                DTU.
-              </p>
-            </div>
+            {/* <p className="text-balance md:max-w-2/3">
+              Design-oriented developer with a passion for creating beautiful and functional
+              applications. I specialize in full-stack development, data science, and machine
+              learning.
+            </p> */}
           </div>
 
           <div className="space-y-12">
@@ -78,7 +77,18 @@ export default function Home() {
             </div>
 
             <div className="">
-              <h2>Projects</h2>
+              {/* <h2>Projects</h2>
+              <div className="flex flex-wrap gap-4">
+                <div className="p-4">
+                  <Image
+                    src="/projects/reolreol.png"
+                    alt="figma"
+                    width={500}
+                    height={100}
+                    className="rounded-md"
+                  />
+                </div>
+              </div> */}
             </div>
           </div>
         </main>

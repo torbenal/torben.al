@@ -7,6 +7,10 @@ import * as THREE from 'three'
 import { DoubleSide, Vector3 } from 'three'
 import { SimplexNoise } from 'three/examples/jsm/Addons.js'
 
+// Performance configuration
+const ANIMATION_FPS = 15 // Target FPS for animation updates
+const MOUSE_UPDATE_INTERVAL = 40 // Milliseconds between mouse position updates
+
 // Combined context for scene values
 const SceneContext = createContext({ offset: 0, mousePosition: null as Vector3 | null })
 
@@ -16,10 +20,19 @@ const SceneController = ({ children }: PropsWithChildren) => {
   const sceneValues = useRef({ offset: 0, mousePosition: null as Vector3 | null })
   const plane = useRef(new THREE.Plane(new THREE.Vector3(0, 0, 1), 0))
   const targetPoint = useRef(new THREE.Vector3())
+  const frameCounter = useRef(0)
+  const lastMouseUpdate = useRef(0)
+
+  const animationTime = 0.002
+  const frameSkip = Math.floor(60 / ANIMATION_FPS) - 1
 
   useFrame((state) => {
+    // Skip frames based on target FPS
+    frameCounter.current = (frameCounter.current + 1) % (frameSkip + 1)
+    if (frameCounter.current !== 0) return
+
     // Update animation offset
-    sceneValues.current.offset = Math.sin(state.clock.getElapsedTime() * 0.03) * 0.2
+    sceneValues.current.offset = Math.sin(state.clock.getElapsedTime() * animationTime)
 
     // Keep the plane aligned with the camera
     if (camera) {
@@ -31,6 +44,12 @@ const SceneController = ({ children }: PropsWithChildren) => {
   // Handle mouse movement
   useEffect(() => {
     const handleMouseMove = (event: any) => {
+      const now = Date.now()
+
+      // Throttle mouse updates
+      if (now - lastMouseUpdate.current < MOUSE_UPDATE_INTERVAL) return
+      lastMouseUpdate.current = now
+
       // Calculate normalized device coordinates
       const x = (event.offsetX / size.width) * 2 - 1
       const y = -(event.offsetY / size.height) * 2 + 1
@@ -54,7 +73,8 @@ const TerrainMesh = () => {
   const simplex = useMemo(() => new SimplexNoise(), [])
   const meshRef = useRef<THREE.Mesh>(null)
   const geometryRef = useRef<THREE.PlaneGeometry>(null)
-  const size = 64 // Reduced for better performance
+  const size = 128 // Reduced for better performance
+  const frameCounter = useRef(0)
 
   // Move the useContext hook to the top level of the component
   const scene = useContext(SceneContext)
@@ -94,6 +114,10 @@ const TerrainMesh = () => {
   // Update geometry
   useFrame(() => {
     if (!geometryRef.current || !meshRef.current) return
+
+    // Skip frames to match the animation FPS in the controller
+    frameCounter.current = (frameCounter.current + 1) % Math.floor(60 / ANIMATION_FPS)
+    if (frameCounter.current !== 0) return
 
     // Use the scene values from the context that was retrieved at the top level
     const { offset, mousePosition } = scene
@@ -173,7 +197,7 @@ const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
         enablePan={false}
       />
       <EffectComposer>
-        <Noise opacity={0.12} />
+        <Noise opacity={0.05} />
       </EffectComposer>
     </SceneController>
   )

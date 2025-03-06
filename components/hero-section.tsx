@@ -10,6 +10,7 @@ export const HeroSection = () => {
       <div className="relative">
         <div className="absolute inset-0 z-[0] h-[90ch] ">
           <FluidCanvas isControlsEnabled={isControlsEnabled} />
+          {/* <div className="bg-red-500 h-full w-full" /> */}
         </div>
 
         <div className="absolute top-[calc(50ch)] h-[40ch] w-full bg-gradient-to-b from-[#0A0A0A00] to-[#0A0A0A] pointer-events-none"></div>
