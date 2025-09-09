@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <HeroSection />
 
-      <div className="font-sans max-w-[1200px] mx-auto py-4 px-4 relative sm:pointer-events-none">
+      <div className="font-sans max-w-[1200px] mx-auto py-4 px-4 absolute inset-0 z-10 pointer-events-none">
         <Header />
         <main className="flex flex-col ">
           <div className="space-y-20 h-[90ch] flex flex-col justify-center">
