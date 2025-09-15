@@ -1,8 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+// import { useState } from 'react'
+// import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 const toolData: Record<string, { displayName: string; href?: string }> = {
   figma: { displayName: 'Figma', href: 'https://figma.com' },
@@ -27,7 +27,7 @@ const toolData: Record<string, { displayName: string; href?: string }> = {
 }
 
 export const ToolIcon = ({ name }: { name: string }) => {
-  const [open, setOpen] = useState(false)
+  // const [open, setOpen] = useState(false)
   const tool = toolData[name] || { displayName: name }
 
   return (
@@ -36,8 +36,8 @@ export const ToolIcon = ({ name }: { name: string }) => {
       target="_blank"
       rel="noopener noreferrer"
       className="lifted h-14 w-14 p-3 items-center justify-center flex rounded-2xl cursor-pointer pointer-events-auto focus:outline-none"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      // onMouseEnter={() => setOpen(true)}
+      // onMouseLeave={() => setOpen(false)}
     >
       <Image src={`/logos/${name}.svg`} alt={name} width="56" height={56} />
     </a>
