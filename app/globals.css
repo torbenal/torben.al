@@ -3,6 +3,8 @@
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
 }
 
 h1 {
@@ -20,6 +22,8 @@ h3 {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --font-sans: var(--font-noto-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -34,4 +38,17 @@ body {
   50% {
     opacity: 0;
   }
+}
+
+.lifted {
+  background: white;
+  box-shadow: 0 0 14px 5px hsla(0,0%,100%,.19), inset 0 -3px .4px 0 rgba(0,0,0,.2), inset 0 1px .4px 0 #fff;
+  border-left: 1px solid rgba(0,0,0,.2);
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  border-right: 1px solid rgba(0,0,0,.2);
+  transition: transform 0.2s ease;
+}
+
+.lifted:hover {
+  transform: scale(1.05);
 }

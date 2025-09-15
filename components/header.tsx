@@ -23,15 +23,7 @@ const headerLinks = [
     text: 'Download CV',
     icon: '/download.svg',
     jsx: (
-      <button
-        className="bg-white rounded-md py-1 px-2 flex items-center gap-2 text-[#131212] font-medium text-sm cursor-pointer"
-        style={{
-          boxShadow: 'inset 0 -2px .4px 0 rgba(0,0,0,.2),inset 0 1px .4px 0 #fff',
-          borderLeft: '1px solid rgba(0,0,0,.2)',
-          borderBottom: '1px solid rgba(0,0,0,.2)',
-          borderRight: '1px solid rgba(0,0,0,.2)',
-        }}
-      >
+      <button className="lifted rounded-md py-1 px-2 flex items-center gap-2 text-[#131212] font-medium text-sm cursor-pointer">
         Download CV
       </button>
     ),

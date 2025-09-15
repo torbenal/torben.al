@@ -132,8 +132,13 @@ const SceneController = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     const domElement = gl.domElement
+    // Re-enable pointer events only for the canvas element when we need mouse tracking
+    domElement.style.pointerEvents = 'auto'
     domElement.addEventListener('mousemove', handleMouseMove, { passive: true })
-    return () => domElement.removeEventListener('mousemove', handleMouseMove)
+    return () => {
+      domElement.removeEventListener('mousemove', handleMouseMove)
+      domElement.style.pointerEvents = 'none'
+    }
   }, [gl, handleMouseMove])
 
   return <SceneContext.Provider value={sceneValues.current}>{children}</SceneContext.Provider>
@@ -320,7 +325,7 @@ const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
   
   // Simple camera bounds that fill the viewport
   const cameraBounds = useMemo(() => {
-    const aspect = size.width / size.height
+    const aspect = size.width * 0.5 / size.height
     const height = 4
     const width = height * aspect
     return { left: -width, right: width, top: height, bottom: -height }
@@ -401,8 +406,8 @@ export default function FluidCanvas({ isControlsEnabled }: { isControlsEnabled: 
   }, [])
   
   return (
-    <Canvas 
-      style={{ width: '100vw', height: '100vh' }}
+    <Canvas
+      style={{ width: '100vw', height: '100vh', pointerEvents: 'none' }}
       frameloop={isActive ? 'always' : 'never'}
       gl={{
         powerPreference: 'high-performance',
