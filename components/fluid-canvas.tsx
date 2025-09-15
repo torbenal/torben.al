@@ -1,5 +1,5 @@
 'use client'
-import { OrbitControls, OrthographicCamera, PerformanceMonitor } from '@react-three/drei'
+import { OrthographicCamera, PerformanceMonitor } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { EffectComposer, Noise } from '@react-three/postprocessing'
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -316,10 +316,9 @@ const TerrainMesh = () => {
   )
 }
 
-const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
+const Scene = () => {
   const { size } = useThree()
   const camRef = useRef<THREE.OrthographicCamera>(null)
-  const controlsRef = useRef<any>(null)
   const initialCamPos = useMemo(() => new Vector3(0, 0, 5), [])
   const [performanceLevel, setPerformanceLevel] = useState<'high' | 'medium' | 'low'>('high')
   
@@ -344,17 +343,6 @@ const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
   }, [])
 
 
-  // Reset camera position and rotation when controls are disabled
-  useEffect(() => {
-    if (!isControlsEnabled && camRef.current && controlsRef.current) {
-      // Reset camera to initial position
-      camRef.current.position.copy(initialCamPos)
-      camRef.current.lookAt(0, 0, 0)
-
-      // Reset orbit controls
-      controlsRef.current.reset()
-    }
-  }, [isControlsEnabled, initialCamPos])
 
   return (
     <SceneController>
@@ -374,15 +362,6 @@ const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
         far={100}
         onUpdate={(camera) => camera.updateProjectionMatrix()}
       />
-      <OrbitControls
-        ref={controlsRef}
-        enabled={isControlsEnabled && !isMobile}
-        maxDistance={10}
-        minDistance={1}
-        enablePan={false}
-        enableDamping={true}
-        dampingFactor={0.05}
-      />
       {ENABLE_POST_PROCESSING && performanceLevel !== 'low' && (
         <EffectComposer multisampling={performanceLevel === 'high' ? 4 : 0}>
           <Noise opacity={performanceLevel === 'high' ? 0.05 : 0.02} />
@@ -392,7 +371,7 @@ const Scene = ({ isControlsEnabled }: { isControlsEnabled: boolean }) => {
   )
 }
 
-export default function FluidCanvas({ isControlsEnabled }: { isControlsEnabled: boolean }) {
+export default function FluidCanvas() {
   const [isActive, setIsActive] = useState(true)
   
   // Pause animation when tab is not visible to save battery
@@ -425,7 +404,7 @@ export default function FluidCanvas({ isControlsEnabled }: { isControlsEnabled: 
       }}
       dpr={isMobile ? [0.5, 1] : [1, 2]}
     >
-      <Scene isControlsEnabled={isControlsEnabled} />
+      <Scene />
     </Canvas>
   )
 }
